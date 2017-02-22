@@ -23,6 +23,8 @@ public class LoginServlet extends HttpServlet {
         VkApiClient vk = new VkApiClient(new HttpTransportClient());
         int public_id = Integer.parseInt(req.getParameter("id"));
         int max = Integer.parseInt(req.getParameter("count"));
+        int minReposts = Integer.parseInt(req.getParameter("repost"));
+        int minLikes = Integer.parseInt(req.getParameter("likes"));
 
         String root = req.getParameter("root");
         VFS vfs = new VFS(root);
@@ -45,7 +47,8 @@ public class LoginServlet extends HttpServlet {
                 vfs.addEntityTextOnly(text);
                 isParse = true;
             } catch (NullPointerException e) {
-                e.printStackTrace();
+                // LOGGING
+                // e.printStackTrace();
             }
 
             // trying to get attachments
@@ -57,6 +60,7 @@ public class LoginServlet extends HttpServlet {
                 }
                 isParse = true;
             } catch (Exception e) {
+                // LOGGING
                 // e.printStackTrace();
             }
 

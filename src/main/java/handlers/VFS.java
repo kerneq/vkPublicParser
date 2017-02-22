@@ -75,7 +75,8 @@ public class VFS {
             Files.copy(in, Paths.get(locDir.getCanonicalPath()
                     + File.separator + imgName++));
         } catch (IOException e) {
-            e.printStackTrace();
+            // LOGGING
+            // e.printStackTrace();
         }
     }
 

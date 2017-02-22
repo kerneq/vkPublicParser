@@ -41,6 +41,14 @@ public class LoginServlet extends HttpServlet {
         for (int i = 0; i < list.size() && i < max; i++) {
             boolean isParse = false;
 
+            // optional quality checker
+            if (list.get(i).getLikes().getCount() < minLikes ||
+                    list.get(0).getReposts().getCount() < minReposts) {
+                max++;
+                vfs.rollBack();
+                continue;
+            }
+
             // trying to get title text
             try {
                 String text = list.get(i).getText();

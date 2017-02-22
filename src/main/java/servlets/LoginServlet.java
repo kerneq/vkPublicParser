@@ -33,11 +33,12 @@ public class LoginServlet extends HttpServlet {
 
         List<WallpostFull> list = null;
         try {
-            list = vk.wall().get().ownerId((-1)*public_id).execute().getItems();
+            //list = vk.wall().get().ownerId((-1)*public_id).execute().getItems();
+            list = vk.wall().get().ownerId((-1)*public_id).count(100).offset(0).execute().getItems();
         } catch (Exception e) {
             e.printStackTrace();
         }
-
+        System.out.println(list.size());
         resp.setContentType("text/html;charset=utf-8");
 
         for (int i = 0; i < list.size() && i < max; i++) {
@@ -58,7 +59,6 @@ public class LoginServlet extends HttpServlet {
                 isParse = true;
             } catch (NullPointerException e) {
                 // LOGGING
-                // e.printStackTrace();
             }
 
             // trying to get attachments
@@ -66,12 +66,12 @@ public class LoginServlet extends HttpServlet {
                 List<WallpostAttachment> attach = list.get(i).getAttachments();
                 for (int j = 0; j < attach.size(); j++) {
                     String imgUrl = ImgUrlParser.getUrlFromSrc(attach.get(j).toString());
-                    vfs.addEntity(imgUrl);
+                    if (!vfs.addEntity(imgUrl))
+                        vfs.rollBack();
                 }
                 isParse = true;
             } catch (Exception e) {
                 // LOGGING
-                // e.printStackTrace();
             }
 
             if (isParse) {

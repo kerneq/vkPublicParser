@@ -58,7 +58,8 @@ public class VFS {
 
     }
 
-    public void addEntity(String url) {
+    public boolean addEntity(String url) {
+        boolean success = false;
         File locDir = null;
         try {
             locDir = new File(destDir.getCanonicalFile() + File.separator +  counter);
@@ -74,39 +75,12 @@ public class VFS {
             java.io.InputStream in = new URL(url).openStream();
             Files.copy(in, Paths.get(locDir.getCanonicalPath()
                     + File.separator + imgName++));
+            success = true;
         } catch (IOException e) {
             // LOGGING
-            // e.printStackTrace();
-        }
-    }
-
-    public void addEntity(String text, String url) {
-        File locDir = null;
-        try {
-            locDir = new File(destDir.getCanonicalFile() + File.separator +  counter);
-        } catch (IOException e) {
-            e.printStackTrace();
         }
 
-        if (!locDir.exists()) {
-            createDir(locDir);
-        }
-
-        try (PrintWriter pw = new PrintWriter(new FileWriter(locDir.getCanonicalPath()
-                + File.separator + "title.txt"))) {
-            pw.print(text);
-            pw.flush();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        try {
-            java.io.InputStream in = new URL(url).openStream();
-            Files.copy(in, Paths.get(locDir.getCanonicalPath()
-                    + File.separator + imgName++));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        return success;
     }
 
     public void rollBack() {

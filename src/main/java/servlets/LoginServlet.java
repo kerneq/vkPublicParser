@@ -57,7 +57,6 @@ public class LoginServlet extends HttpServlet {
                 }
                 isParse = true;
             } catch (Exception e) {
-                // vfs.rollBack();
                 // e.printStackTrace();
             }
 
@@ -65,6 +64,7 @@ public class LoginServlet extends HttpServlet {
                 vfs.nextStep();
             } else {
                 max++;
+                vfs.rollBack();
             }
         }
 

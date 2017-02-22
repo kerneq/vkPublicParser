@@ -23,8 +23,10 @@ public class LoginServlet extends HttpServlet {
         VkApiClient vk = new VkApiClient(new HttpTransportClient());
         int public_id = Integer.parseInt(req.getParameter("id"));
         int max = Integer.parseInt(req.getParameter("count"));
-        int minReposts = Integer.parseInt(req.getParameter("repost"));
-        int minLikes = Integer.parseInt(req.getParameter("likes"));
+        int minReposts = ("".equalsIgnoreCase(req.getParameter("repost")))? 0 :
+                Integer.parseInt(req.getParameter("repost"));
+        int minLikes = ("".equalsIgnoreCase(req.getParameter("likes")))? 0 :
+                Integer.parseInt(req.getParameter("likes"));
 
         String root = req.getParameter("root");
         VFS vfs = new VFS(root);

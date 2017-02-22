@@ -36,6 +36,28 @@ public class VFS {
         destDir.mkdir();
     }
 
+    public void addEntityTextOnly(String text) {
+        File locDir = null;
+        try {
+            locDir = new File(destDir.getCanonicalFile() + File.separator +  counter);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        if (!locDir.exists()) {
+            createDir(locDir);
+        }
+
+        try (PrintWriter pw = new PrintWriter(new FileWriter(locDir.getCanonicalPath()
+                + File.separator + "title.txt"))) {
+            pw.print(text);
+            pw.flush();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+    }
+
     public void addEntity(String url) {
         File locDir = null;
         try {
@@ -88,8 +110,7 @@ public class VFS {
 
     public void rollBack() {
         try {
-            FileUtils.deleteDirectory(new File(destDir.getCanonicalFile() + File.separator +  counter
-            + File.separator));
+            FileUtils.deleteDirectory(new File(destDir.getCanonicalFile() + File.separator +  counter));
         } catch (IOException e) {
             e.printStackTrace();
         }

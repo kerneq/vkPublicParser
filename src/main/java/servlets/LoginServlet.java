@@ -37,26 +37,34 @@ public class LoginServlet extends HttpServlet {
         resp.setContentType("text/html;charset=utf-8");
 
         for (int i = 0; i < list.size() && i < max; i++) {
+            boolean isParse = false;
+
+            // trying to get title text
             try {
-                if (list.get(i).getAttachments().size() == 0)
-                    continue;
-
                 String text = list.get(i).getText();
-                text = (text == null) ? "" : text;
+                vfs.addEntityTextOnly(text);
+                isParse = true;
+            } catch (NullPointerException e) {
+                e.printStackTrace();
+            }
 
-                String imgUrl = ImgUrlParser.getUrlFromSrc(list.get(i).getAttachments().get(0).toString());
-                vfs.addEntity(text, imgUrl);
-
+            // trying to get attachments
+            try {
                 List<WallpostAttachment> attach = list.get(i).getAttachments();
-                for (int j = 1; j < attach.size(); j++) {
-                    imgUrl = ImgUrlParser.getUrlFromSrc(attach.get(j).toString());
+                for (int j = 0; j < attach.size(); j++) {
+                    String imgUrl = ImgUrlParser.getUrlFromSrc(attach.get(j).toString());
                     vfs.addEntity(imgUrl);
                 }
-                vfs.nextStep();
+                isParse = true;
             } catch (Exception e) {
-                vfs.rollBack();
+                // vfs.rollBack();
+                // e.printStackTrace();
+            }
+
+            if (isParse) {
+                vfs.nextStep();
+            } else {
                 max++;
-                continue;
             }
         }
 

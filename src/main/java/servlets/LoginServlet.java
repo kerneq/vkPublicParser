@@ -4,6 +4,7 @@ import com.vk.api.sdk.client.VkApiClient;
 import com.vk.api.sdk.httpclient.HttpTransportClient;
 import com.vk.api.sdk.objects.wall.WallpostAttachment;
 import com.vk.api.sdk.objects.wall.WallpostFull;
+import handlers.IdPublicHandler;
 import handlers.ImgUrlParser;
 import handlers.VFS;
 
@@ -22,7 +23,7 @@ public class LoginServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         VkApiClient vk = new VkApiClient(new HttpTransportClient());
-        int public_id = Integer.parseInt(req.getParameter("id"));
+        int public_id = IdPublicHandler.getID(req.getParameter("id"));
         int max = Integer.parseInt(req.getParameter("count"));
         int minReposts = ("".equalsIgnoreCase(req.getParameter("repost")))? 0 :
                 Integer.parseInt(req.getParameter("repost"));

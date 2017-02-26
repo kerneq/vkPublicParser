@@ -10,7 +10,7 @@ import java.net.URL;
  * Created by iters on 2/26/17.
  */
 public class IdPublicHandler {
-    private static int getID(String url) {
+    public static int getID(String url) {
         String str = getStringWithId(url);
         String find = "/wall-";
         str = str.substring(str.indexOf(find) + find.length(), str.length());
@@ -18,7 +18,7 @@ public class IdPublicHandler {
         return Integer.parseInt(str);
     }
 
-    public static String getStringWithId(String url) {
+    private static String getStringWithId(String url) {
         URL pub = null;
 
         try {

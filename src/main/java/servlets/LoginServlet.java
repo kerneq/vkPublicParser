@@ -56,8 +56,7 @@ public class LoginServlet extends HttpServlet {
             // trying to get title text
             try {
                 String text = list.get(i).getText();
-                vfs.addEntityTextOnly(text);
-                isParse = true;
+                isParse = vfs.addEntityTextOnly(text);
             } catch (NullPointerException e) {
                 // LOGGING
             }

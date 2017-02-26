@@ -36,8 +36,13 @@ public class VFS {
         destDir.mkdir();
     }
 
-    public void addEntityTextOnly(String text) {
+    public boolean addEntityTextOnly(String text) {
         File locDir = null;
+
+        if (text.trim().length() == 0) {
+            return false;
+        }
+
         try {
             locDir = new File(destDir.getCanonicalFile() + File.separator +  counter);
         } catch (IOException e) {
@@ -56,6 +61,7 @@ public class VFS {
             e.printStackTrace();
         }
 
+        return true;
     }
 
     public boolean addEntity(String url) {

@@ -86,6 +86,19 @@ public class LoginServlet extends HttpServlet {
                 // LOGGING
             }
 
+            // gain likes, reposts, comments for statistic
+            int likes = 0, reposts = 0, comments = 0;
+            try {
+                likes = list.get(i).getLikes().getCount();
+                reposts = list.get(i).getReposts().getCount();
+                comments = list.get(i).getComments().getCount();
+            } catch (Exception e) {
+                // LOGGING
+            } finally {
+                vfs.addStatistic(likes, reposts, comments);
+            }
+
+            // check if was a content here
             if (isParse) {
                 vfs.nextStep();
             } else if (!isParse || addedPhoto == 0) {

@@ -2,10 +2,7 @@ package handlers;
 
 import org.apache.commons.io.FileUtils;
 
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.PrintWriter;
+import java.io.*;
 import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -86,6 +83,28 @@ public class VFS {
         }
 
         return success;
+    }
+
+    public void addStatistic(int likes, int reposts, int comments) {
+        File locDir = null;
+        try {
+            locDir = new File(destDir.getCanonicalFile() + File.separator +  counter);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        try(PrintWriter pw = new PrintWriter(locDir.getCanonicalPath()
+                + File.separator + "statistic.txt")) {
+            pw.write("likes:" + likes + "\n");
+            pw.write("reposts:" + reposts + "\n");
+            pw.write("comments:" + comments);
+        } catch (FileNotFoundException e) {
+            // LOGGING
+            // e.printStackTrace();
+        } catch (IOException e) {
+            // LOGGING
+            // e.printStackTrace();
+        }
     }
 
     public void rollBack() {

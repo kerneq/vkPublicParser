@@ -16,6 +16,7 @@ import java.util.List;
 
 /**
  * Created by iters on 2/18/17.
+ * Parser, that's parse only text with images or just text
  */
 public class LoginServlet extends HttpServlet {
     @Override
@@ -38,7 +39,7 @@ public class LoginServlet extends HttpServlet {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        System.out.println(list.size());
+        // System.out.println(list.size());
         resp.setContentType("text/html;charset=utf-8");
 
         for (int i = 0; i < list.size() && i < max; i++) {
@@ -65,12 +66,18 @@ public class LoginServlet extends HttpServlet {
             try {
                 List<WallpostAttachment> attach = list.get(i).getAttachments();
                 for (int j = 0; j < attach.size(); j++) {
+                    // check attach type == photo
+                    if (!"photo".equalsIgnoreCase(attach.get(j).getType().getValue())) {
+                        throw new RuntimeException();
+                    }
+
                     String imgUrl = ImgUrlParser.getUrlFromSrc(attach.get(j).toString());
                     if (!vfs.addEntity(imgUrl))
                         vfs.rollBack();
                 }
                 isParse = true;
             } catch (Exception e) {
+                vfs.rollBack();
                 // LOGGING
             }
 

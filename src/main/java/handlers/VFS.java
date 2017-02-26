@@ -71,8 +71,7 @@ public class VFS {
             createDir(locDir);
         }
 
-        try {
-            java.io.InputStream in = new URL(url).openStream();
+        try(java.io.InputStream in = new URL(url).openStream()) {
             Files.copy(in, Paths.get(locDir.getCanonicalPath()
                     + File.separator + imgName++));
             success = true;

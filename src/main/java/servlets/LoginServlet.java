@@ -62,28 +62,34 @@ public class LoginServlet extends HttpServlet {
                 // LOGGING
             }
 
+            int addedPhoto = 0;
             // trying to get attachments
             try {
                 List<WallpostAttachment> attach = list.get(i).getAttachments();
+                addedPhoto = 0;
                 for (int j = 0; j < attach.size(); j++) {
                     // check attach type == photo
                     if (!"photo".equalsIgnoreCase(attach.get(j).getType().getValue())) {
-                        throw new RuntimeException();
+                        // throw new RuntimeException();
+                        continue;
                     }
 
                     String imgUrl = ImgUrlParser.getUrlFromSrc(attach.get(j).toString());
-                    if (!vfs.addEntity(imgUrl))
+                    if (!vfs.addEntity(imgUrl)) {
                         vfs.rollBack();
+                    } else {
+                        addedPhoto++;
+                    }
                 }
                 isParse = true;
             } catch (Exception e) {
-                vfs.rollBack();
+                // fs.rollBack();
                 // LOGGING
             }
 
             if (isParse) {
                 vfs.nextStep();
-            } else {
+            } else if (!isParse || addedPhoto == 0) {
                 max++;
                 vfs.rollBack();
             }

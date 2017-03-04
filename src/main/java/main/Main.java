@@ -22,7 +22,7 @@ public class Main {
     private static int port;
     private static int client_id;
     private static String secret;
-    private static UserActor actor;
+    private static UserActor actor = null;
 
     public static void main(String[] args) throws Exception {
         init();
@@ -33,7 +33,7 @@ public class Main {
         context.addServlet(new ServletHolder(new LoginServlet()), "/login");
         context.addServlet(new ServletHolder(new AuthServlet(client_id)), "/auth");
         context.addServlet(new ServletHolder(new VkResponseRedirect(vk, client_id, secret)), "/response");
-        context.addServlet(new ServletHolder(new InfoServlet(vk, actor)), "/info");
+        context.addServlet(new ServletHolder(new InfoServlet(vk)), "/info");
 
         Server server = new Server(port);
         server.setHandler(context);
@@ -47,6 +47,14 @@ public class Main {
         test.addEntity("hello", "https://encrypted-tbn3.gstatic.com/images?q=tbn:ANd9GcTJrzGvFkTylKm_BOaBLIUhpDuqA363gtilvNIZTV2Y85zWcSq6jksF_cQ");
         test.addEntity("http://minionomaniya.ru/wp-content/uploads/2016/01/%D0%BC%D0%B8%D0%BD%D1%8C%D0%BE%D0%BD%D1%8B-%D0%BF%D1%80%D0%B8%D0%BA%D0%BE%D0%BB%D1%8B-%D0%BA%D0%B0%D1%80%D1%82%D0%B8%D0%BD%D0%BA%D0%B8.jpg");
         */
+    }
+
+    public static void setUserActor(UserActor newActor) {
+        actor = newActor;
+    }
+
+    public static UserActor getUserActor() {
+        return actor;
     }
 
     private static void init() {

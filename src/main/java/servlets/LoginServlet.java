@@ -1,12 +1,17 @@
 package servlets;
 
 import com.vk.api.sdk.client.VkApiClient;
+import com.vk.api.sdk.client.actors.UserActor;
+import com.vk.api.sdk.exceptions.ApiException;
+import com.vk.api.sdk.exceptions.ClientException;
 import com.vk.api.sdk.httpclient.HttpTransportClient;
+import com.vk.api.sdk.objects.photos.PhotoUpload;
 import com.vk.api.sdk.objects.wall.WallpostAttachment;
 import com.vk.api.sdk.objects.wall.WallpostFull;
 import handlers.IdPublicHandler;
 import handlers.ImgUrlParser;
 import handlers.VFS;
+import main.Main;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -20,9 +25,24 @@ import java.util.List;
  * Parser, that's parse only text with images or just text
  */
 public class LoginServlet extends HttpServlet {
+
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         VkApiClient vk = new VkApiClient(new HttpTransportClient());
+        try {
+            UserActor actor = Main.getUserActor();
+            PhotoUpload photo =  vk.photos().
+                    getUploadServer(actor).
+                    albumId(241636764).
+                    groupId(140860188).execute();
+            System.out.println(photo.getUploadUrl());
+        } catch (ApiException e) {
+            e.printStackTrace();
+        } catch (ClientException e) {
+            e.printStackTrace();
+        }
+
+
         int public_id = IdPublicHandler.getID(req.getParameter("id"));
         int max = Integer.parseInt(req.getParameter("count"));
         int minReposts = ("".equalsIgnoreCase(req.getParameter("repost")))? 0 :
@@ -32,7 +52,7 @@ public class LoginServlet extends HttpServlet {
 
         String root = req.getParameter("root");
         VFS vfs = new VFS(root);
-        
+
         List<WallpostFull> list = null;
         try {
             //list = vk.wall().get().ownerId((-1)*public_id).execute().getItems();

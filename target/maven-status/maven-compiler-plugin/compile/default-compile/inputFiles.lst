@@ -1,8 +1,11 @@
+/home/iters/Видео/vk/VK_TEST/src/main/java/servlets/Auth/VkResponseRedirect.java
+/home/iters/Видео/vk/VK_TEST/src/main/java/servlets/Auth/InfoServlet.java
 /home/iters/Видео/vk/VK_TEST/src/main/java/main/Main.java
 /home/iters/Видео/vk/VK_TEST/src/main/java/handlers/ImgUrlParser.java
 /home/iters/Видео/vk/VK_TEST/src/main/java/handlers/VFS.java
 /home/iters/Видео/vk/VK_TEST/src/main/java/templater/PageGenerator.java
-/home/iters/Видео/vk/VK_TEST/src/main/java/servlets/InfoServlet.java
-/home/iters/Видео/vk/VK_TEST/src/main/java/servlets/CallBackServlet.java
+/home/iters/Видео/vk/VK_TEST/src/main/java/handlers/MultipartPostReq.java
+/home/iters/Видео/vk/VK_TEST/src/main/java/servlets/Auth/AuthServlet.java
 /home/iters/Видео/vk/VK_TEST/src/main/java/servlets/MainServlet.java
+/home/iters/Видео/vk/VK_TEST/src/main/java/handlers/IdPublicHandler.java
 /home/iters/Видео/vk/VK_TEST/src/main/java/servlets/LoginServlet.java

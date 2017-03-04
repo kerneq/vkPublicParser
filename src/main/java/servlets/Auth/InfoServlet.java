@@ -5,6 +5,7 @@ import com.vk.api.sdk.client.actors.UserActor;
 import com.vk.api.sdk.exceptions.ApiException;
 import com.vk.api.sdk.exceptions.ClientException;
 import com.vk.api.sdk.objects.users.UserXtrCounters;
+import main.Main;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -18,18 +19,17 @@ import java.util.List;
  */
 public class InfoServlet extends HttpServlet {
     private VkApiClient vk;
-    private UserActor actor;
 
-    public InfoServlet(VkApiClient vk, UserActor actor) {
+    public InfoServlet(VkApiClient vk) {
         this.vk = vk;
-        this.actor = actor;
     }
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        actor = new UserActor(
+        UserActor actor = new UserActor(
                 Integer.parseInt(req.getParameter("user")),
                 req.getParameter("token"));
+        Main.setUserActor(actor);
 
         List<UserXtrCounters> getUsersResponse = null;
         try {
@@ -43,7 +43,8 @@ public class InfoServlet extends HttpServlet {
         UserXtrCounters user = getUsersResponse.get(0);
         resp.setContentType("text/html;charset=utf-8");
         resp.setStatus(HttpServletResponse.SC_OK);
-        resp.getWriter().println(getInfoPage(user));
+        // resp.getWriter().println(getInfoPage(user));
+        resp.sendRedirect("http://0.0.0.0:8000/");
     }
 
     private String getInfoPage(UserXtrCounters user) {

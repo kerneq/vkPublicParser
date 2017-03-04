@@ -1,11 +1,16 @@
 package main;
 
-import handlers.IdPublicHandler;
+import com.vk.api.sdk.client.VkApiClient;
+import com.vk.api.sdk.client.actors.UserActor;
+import com.vk.api.sdk.httpclient.HttpTransportClient;
 import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.servlet.ServletContextHandler;
 import org.eclipse.jetty.servlet.ServletHolder;
+import servlets.Auth.AuthServlet;
+import servlets.Auth.InfoServlet;
 import servlets.LoginServlet;
 import servlets.MainServlet;
+import servlets.Auth.VkResponseRedirect;
 
 import java.io.IOException;
 import java.util.Properties;
@@ -17,14 +22,18 @@ public class Main {
     private static int port;
     private static int client_id;
     private static String secret;
+    private static UserActor actor;
 
     public static void main(String[] args) throws Exception {
         init();
+        VkApiClient vk = new VkApiClient(new HttpTransportClient());
+
         ServletContextHandler context = new ServletContextHandler(ServletContextHandler.SESSIONS);
         context.addServlet(new ServletHolder(new MainServlet()), "/");
         context.addServlet(new ServletHolder(new LoginServlet()), "/login");
-        // context.addServlet(new ServletHolder(new CallBackServlet(vk, client_id, secret)), "/callback");
-        // context.addServlet(new ServletHolder(new InfoServlet(vk)), "/info");
+        context.addServlet(new ServletHolder(new AuthServlet(client_id)), "/auth");
+        context.addServlet(new ServletHolder(new VkResponseRedirect(vk, client_id, secret)), "/response");
+        context.addServlet(new ServletHolder(new InfoServlet(vk, actor)), "/info");
 
         Server server = new Server(port);
         server.setHandler(context);

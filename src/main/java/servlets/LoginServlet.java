@@ -32,7 +32,7 @@ public class LoginServlet extends HttpServlet {
 
         String root = req.getParameter("root");
         VFS vfs = new VFS(root);
-
+        
         List<WallpostFull> list = null;
         try {
             //list = vk.wall().get().ownerId((-1)*public_id).execute().getItems();
@@ -70,6 +70,7 @@ public class LoginServlet extends HttpServlet {
                 for (int j = 0; j < attach.size(); j++) {
                     // check attach type == photo
                     if (!"photo".equalsIgnoreCase(attach.get(j).getType().getValue())) {
+                        System.out.println("non photo");
                         // throw new RuntimeException();
                         continue;
                     }
@@ -103,6 +104,7 @@ public class LoginServlet extends HttpServlet {
             if (isParse) {
                 vfs.nextStep();
             } else if (!isParse || addedPhoto == 0) {
+                System.out.println("откат");
                 max++;
                 vfs.rollBack();
             }

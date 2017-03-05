@@ -5,6 +5,7 @@ import com.vk.api.sdk.client.actors.UserActor;
 import com.vk.api.sdk.exceptions.ApiException;
 import com.vk.api.sdk.exceptions.ClientException;
 import com.vk.api.sdk.objects.users.UserXtrCounters;
+import handlers.MultipartPostReq;
 import main.Main;
 
 import javax.servlet.ServletException;
@@ -30,6 +31,14 @@ public class InfoServlet extends HttpServlet {
                 Integer.parseInt(req.getParameter("user")),
                 req.getParameter("token"));
         Main.setUserActor(actor);
+
+        // test only
+        try {
+            MultipartPostReq.main(null);
+        } catch (ClientException | ApiException e) {
+            e.printStackTrace();
+        }
+        // end test
 
         List<UserXtrCounters> getUsersResponse = null;
         try {

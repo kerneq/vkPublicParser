@@ -25,7 +25,7 @@ public class AuthServlet extends HttpServlet {
         return "https://oauth.vk.com/authorize?client_id=" +
                 client_id + "&display=page&redirect_uri=" +
                 getRedirectUri() +
-                "&scope=photos&response_type=code";
+                "&scope=photos,groups,manage&response_type=code";
     }
 
     private String getRedirectUri() {

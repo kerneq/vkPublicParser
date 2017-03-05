@@ -4,6 +4,14 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
+import com.vk.api.sdk.client.VkApiClient;
+import com.vk.api.sdk.client.actors.UserActor;
+import com.vk.api.sdk.exceptions.ApiException;
+import com.vk.api.sdk.exceptions.ClientException;
+import com.vk.api.sdk.httpclient.HttpTransportClient;
+import com.vk.api.sdk.objects.photos.Photo;
+import com.vk.api.sdk.objects.photos.PhotoUpload;
+import main.Main;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpPost;
@@ -49,7 +57,6 @@ public class MultipartPostReq {
             JsonElement element = gson.fromJson(answer.toString(), JsonElement.class);
             JsonObject object = element.getAsJsonObject();
 
-            System.out.println(object.get("server"));
             bf.close();
             return object;
         } catch (IOException e) {
@@ -59,10 +66,48 @@ public class MultipartPostReq {
         return null;
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws ClientException, ApiException {
         List<File> imgs = new ArrayList<>();
-        File photo = new File("/home/iters/media/123/1/1.jpeg");
+        File photo = new File("/home/iters/media/123/1/1.jpg");
         imgs.add(photo);
-        sendImages("https://pu.vk.com/c637631/upload.php?act=do_add&mid=36952698&aid=241636764&gid=140860188&hash=f5a604cea201c8eff7786f0a2e5efb3b&rhash=b25c0542f08a6212ad9ab77e9af31b0f&swfupload=1&api=1", imgs);
+
+        VkApiClient vk = new VkApiClient(new HttpTransportClient());
+        UserActor actor = Main.getUserActor();
+        PhotoUpload photoVk =  vk.photos().
+                getUploadServer(actor).
+                albumId(241636764).
+                groupId(140860188).
+                execute();
+
+        System.out.println(photoVk.toString());
+        System.out.println("-------------------------------");
+
+        JsonObject req =  sendImages(photoVk.getUploadUrl(), imgs);
+
+        System.out.println(req.toString());
+        System.out.println("-------------------------------");
+
+        String server = req.get("server").toString();
+        System.out.println("server: " + server);
+
+        String photos_list = req.get("photos_list").toString().replaceAll("\\\\", "");
+        photos_list = photos_list.substring(1, photos_list.length() - 1);
+        System.out.println("photos_list: " + photos_list);
+
+        String albumId = req.get("aid").toString();
+        System.out.println("album: " + albumId);
+
+        String hash = req.get("hash").toString().replaceAll("\"", "");
+        System.out.println("hash: " + hash);
+
+        System.out.println(actor.toString());
+
+        List<Photo> ph =  vk.photos().save(actor).
+                server(Integer.parseInt(server)).
+                photosList(photos_list).
+                albumId(Integer.parseInt(albumId)).
+                hash(hash).groupId(140860188).execute();
+        System.out.println("size: " + ph.size());
+        System.out.println(ph.get(0).toString());
     }
 }

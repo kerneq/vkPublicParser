@@ -22,7 +22,10 @@ public class Main {
     private static int port;
     private static int client_id;
     private static String secret;
-    private static UserActor actor = null;
+
+    private static String token = "0d1f9f2cb46be8b83047d313a58f0c54d6ba7a26bd20469e82a373463f09dd995fc0c20f63185cd28d546";
+    private static int user = 36952698;
+    private static UserActor actor = new UserActor(user, token);
 
     public static void main(String[] args) throws Exception {
         init();

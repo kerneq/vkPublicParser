@@ -34,16 +34,13 @@ public class MultipartPostReq {
     private static int albumLoad = 241636764;
     private static int groupLoad = 140860188;
 
-    public static JsonObject sendImages(String url, List<File> imgs) {
+    private static JsonObject sendImages(String url, File img) {
         HttpClient httpClient = new DefaultHttpClient();
         HttpPost httpPost = new HttpPost(url);
         MultipartEntity reqEntity = new MultipartEntity();
 
-        int counter = 1;
-        for (File file: imgs) {
-            FileBody uploadFilePart = new FileBody(file);
-            reqEntity.addPart("file" + counter++, uploadFilePart);
-        }
+        FileBody uploadFilePart = new FileBody(img);
+        reqEntity.addPart("file1", uploadFilePart);
         httpPost.setEntity(reqEntity);
 
         try {
@@ -85,7 +82,7 @@ public class MultipartPostReq {
         return photoVk;
     }
 
-    private static List<Photo> getUploadedImages(List<File> imgs) {
+    public static List<Photo> getUploadedImages(File imgs) {
         UserActor actor = Main.getUserActor();
         JsonObject req =  sendImages(getVkServer().getUploadUrl(), imgs);
         String server = req.get("server").toString();
@@ -154,11 +151,11 @@ public class MultipartPostReq {
                 hash(hash).groupId(140860188).execute();
         System.out.println("size: " + ph.size());
         System.out.println(ph.get(0).toString());
-        */
 
         List<Photo> photos = getUploadedImages(imgs);
         System.out.println(photos.size());
         System.out.println(photos.get(0).toString());
         System.out.println(ImgUrlParser.getUrlFromSrc(photos.get(0).toString()));
+        */
     }
 }

@@ -17,7 +17,8 @@ public class AuthServlet extends HttpServlet {
     }
 
     @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp)
+            throws ServletException, IOException {
         resp.sendRedirect(getOAuthUrl());
     }
 
@@ -31,5 +32,4 @@ public class AuthServlet extends HttpServlet {
     private String getRedirectUri() {
         return "http://0.0.0.0:8000/response";
     }
-
 }

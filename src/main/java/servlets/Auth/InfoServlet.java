@@ -32,6 +32,7 @@ public class InfoServlet extends HttpServlet {
                 req.getParameter("token"));
         Main.setUserActor(actor);
 
+
         // test only
         try {
             MultipartPostReq.main(null);

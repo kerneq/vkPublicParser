@@ -2,7 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="ff861c12-321d-4fec-baa1-76a7ef491b5f" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/handlers/VFS.java" afterPath="$PROJECT_DIR$/src/main/java/handlers/VFS.java" />
     </list>
     <ignored path="VK_API.iws" />
@@ -30,26 +29,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="MultipartPostReq.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/handlers/MultipartPostReq.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="992">
-              <caret line="158" column="41" selection-start-line="158" selection-start-column="41" selection-end-line="158" selection-end-column="41" />
-              <folding>
-                <element signature="imports" expanded="true" />
-                <element signature="method#sendImages#0;class#MultipartPostReq#0" expanded="false" />
-                <element signature="method#getVkServer#0;class#MultipartPostReq#0" expanded="false" />
-                <element signature="method#getUploadedImages#0;class#MultipartPostReq#0" expanded="false" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="LoginServlet.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/servlets/LoginServlet.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="273">
-              <caret line="124" column="25" selection-start-line="124" selection-start-column="25" selection-end-line="124" selection-end-column="25" />
+            <state relative-caret-position="1663">
+              <caret line="130" column="9" selection-start-line="130" selection-start-column="9" selection-end-line="130" selection-end-column="9" />
               <folding />
             </state>
           </provider>
@@ -58,11 +42,14 @@
       <file leaf-file-name="VFS.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/java/handlers/VFS.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="367">
-              <caret line="129" column="21" selection-start-line="129" selection-start-column="21" selection-end-line="129" selection-end-column="21" />
+            <state relative-caret-position="327">
+              <caret line="129" column="5" selection-start-line="129" selection-start-column="5" selection-end-line="129" selection-end-column="5" />
               <folding>
-                <element signature="e#3556#3557#0" expanded="true" />
-                <element signature="e#3583#3584#0" expanded="true" />
+                <element signature="method#VFS#0;class#VFS#0" expanded="false" />
+                <element signature="method#newSession#0;class#VFS#0" expanded="false" />
+                <element signature="method#addEntityTextOnly#0;class#VFS#0" expanded="false" />
+                <element signature="method#rollBack#0;class#VFS#0" expanded="false" />
+                <element signature="method#nextStep#0;class#VFS#0" expanded="false" />
               </folding>
             </state>
           </provider>
@@ -1060,19 +1047,22 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/servlets/LoginServlet.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="273">
-          <caret line="124" column="25" selection-start-line="124" selection-start-column="25" selection-end-line="124" selection-end-column="25" />
+        <state relative-caret-position="1663">
+          <caret line="130" column="9" selection-start-line="130" selection-start-column="9" selection-end-line="130" selection-end-column="9" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/handlers/VFS.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="367">
-          <caret line="129" column="21" selection-start-line="129" selection-start-column="21" selection-end-line="129" selection-end-column="21" />
+        <state relative-caret-position="327">
+          <caret line="129" column="5" selection-start-line="129" selection-start-column="5" selection-end-line="129" selection-end-column="5" />
           <folding>
-            <element signature="e#3556#3557#0" expanded="true" />
-            <element signature="e#3583#3584#0" expanded="true" />
+            <element signature="method#VFS#0;class#VFS#0" expanded="false" />
+            <element signature="method#newSession#0;class#VFS#0" expanded="false" />
+            <element signature="method#addEntityTextOnly#0;class#VFS#0" expanded="false" />
+            <element signature="method#rollBack#0;class#VFS#0" expanded="false" />
+            <element signature="method#nextStep#0;class#VFS#0" expanded="false" />
           </folding>
         </state>
       </provider>

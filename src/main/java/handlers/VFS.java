@@ -80,10 +80,19 @@ public class VFS {
 
         try(java.io.InputStream in = new URL(url).openStream()) {
             Files.copy(in, Paths.get(locDir.getCanonicalPath()
-                    + File.separator + imgName++));
+                    + File.separator + imgName++ + ".jpg"));
             success = true;
         } catch (IOException e) {
             // LOGGING
+        }
+
+        if (success) {
+            try {
+                imgs.add(new File(locDir.getCanonicalPath()
+                        + File.separator + (imgName - 1) + ".jpg"));
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
 
         return success;

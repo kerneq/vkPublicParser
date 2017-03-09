@@ -34,11 +34,13 @@ public class InfoServlet extends HttpServlet {
 
 
         // test only
+        /*
         try {
             MultipartPostReq.main(null);
         } catch (ClientException | ApiException e) {
             e.printStackTrace();
         }
+        */
         // end test
 
         List<UserXtrCounters> getUsersResponse = null;

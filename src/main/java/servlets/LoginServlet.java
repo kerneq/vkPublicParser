@@ -29,6 +29,8 @@ public class LoginServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         VkApiClient vk = new VkApiClient(new HttpTransportClient());
+
+        /*
         try {
             UserActor actor = Main.getUserActor();
             PhotoUpload photo =  vk.photos().
@@ -41,7 +43,7 @@ public class LoginServlet extends HttpServlet {
         } catch (ClientException e) {
             e.printStackTrace();
         }
-
+        */
 
         int public_id = IdPublicHandler.getID(req.getParameter("id"));
         int max = Integer.parseInt(req.getParameter("count"));

@@ -6,6 +6,10 @@ package handlers;
 public class ImgLoaderParser {
     //TODO: link to one method
 
+    /**
+     * for img that's was load to my group
+     * */
+
     public static String getIdFromImg(String text) {
         String find = "id=";
         int start = text.indexOf(find) + find.length();

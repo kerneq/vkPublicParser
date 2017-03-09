@@ -89,7 +89,20 @@ public class VFS {
                 String imgPath = locDir.getCanonicalPath() +
                         File.separator + (imgName - 1) + ".jpg";
                 List<Photo> photo = MultipartPostReq.getUploadedImages(new File(imgPath));
+
                 String photoUrl = ImgUrlParser.getUrlFromSrc(photo.get(0).toString());
+                String photoId = ImgLoaderParser.getIdFromImg(photo.get(0).toString());
+                String photoAlbumId = ImgLoaderParser.getAlbumIdFromImg(photo.get(0).toString());
+                String photoOwnerId = ImgLoaderParser.getOwnerIdFromImg(photo.get(0).toString());
+
+                File info = new File(locDir.getCanonicalPath() +
+                        File.separator + (imgName - 1) + ".txt");
+                try (BufferedWriter bw = new BufferedWriter(new FileWriter(info))) {
+                    bw.write("url:" + photoUrl + "\n");
+                    bw.write("id:" + photoId + "\n");
+                    bw.write("albumId:" + photoAlbumId + "\n");
+                    bw.write("ownerId:" + photoOwnerId);
+                }
 
             } catch (IOException e) {
                 e.printStackTrace();

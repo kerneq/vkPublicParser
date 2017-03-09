@@ -9,6 +9,8 @@ import java.nio.file.Paths;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.LinkedList;
+import java.util.List;
 
 /**
  * Created by iters on 2/21/17.
@@ -18,12 +20,14 @@ public class VFS {
     private int counter;
     private int imgName;
     private File destDir;
+    private List<File> imgs;
 
     public VFS(String root) {
         this.root = (root.endsWith(File.separator))?root : root + File.separator;
         counter = 1;
         imgName = 1;
         newSession();
+        imgs = new LinkedList<>();
     }
 
     private void newSession() {
@@ -113,6 +117,7 @@ public class VFS {
         } catch (IOException e) {
             e.printStackTrace();
         }
+        imgs.clear();
     }
 
     private void createDir(File dir) {
@@ -122,5 +127,10 @@ public class VFS {
     public void nextStep() {
         counter++;
         imgName = 1;
+        imgs.clear();
+    }
+
+    public List<File> getImgsList() {
+        return imgs;
     }
 }

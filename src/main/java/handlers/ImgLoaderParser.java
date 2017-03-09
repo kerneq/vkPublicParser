@@ -1,9 +1,11 @@
-package handlers.loadPhotoHandlers;
+package handlers;
 
 /**
  * Created by iters on 3/10/17.
  */
 public class ImgLoaderParser {
+    //TODO: link to one method
+
     public static String getIdFromImg(String text) {
         String find = "id=";
         int start = text.indexOf(find) + find.length();

@@ -89,6 +89,8 @@ public class VFS {
                 String imgPath = locDir.getCanonicalPath() +
                         File.separator + (imgName - 1) + ".jpg";
                 List<Photo> photo = MultipartPostReq.getUploadedImages(new File(imgPath));
+                String photoUrl = ImgUrlParser.getUrlFromSrc(photo.get(0).toString());
+
             } catch (IOException e) {
                 e.printStackTrace();
             }

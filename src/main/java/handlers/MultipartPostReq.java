@@ -108,9 +108,10 @@ public class MultipartPostReq {
     }
 
     public static void main(String[] args) throws ClientException, ApiException {
-        List<File> imgs = new ArrayList<>();
         File photo = new File("/home/iters/media/123/2/1.jpg");
-        imgs.add(photo);
+
+        List<Photo> photos = getUploadedImages(photo);
+        System.out.println(photos.get(0).toString());
 
         /*
         UserActor actor = Main.getUserActor();

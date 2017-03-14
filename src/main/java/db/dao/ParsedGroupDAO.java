@@ -1,7 +1,6 @@
 package db.dao;
 
 import db.dataSets.ParsedGroup;
-
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -37,5 +36,18 @@ public class ParsedGroupDAO {
         result.close();
         stm.close();
         return groups;
+    }
+
+    public void setUpdatedParsedGroup(ParsedGroup gr) throws SQLException {
+        Statement stm = connection.createStatement();
+        String query = String.format("UPDATE parse_from SET " +
+                "last_parse_time = NOW(), " +
+                "last_usage_time = NOW() " +
+                "WHERE id = %d;", gr.id);
+        int updated = stm.executeUpdate(query);
+        if (updated < 1) {
+            throw new RuntimeException("updated 0 entity");
+        }
+        stm.close();
     }
 }

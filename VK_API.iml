@@ -21,6 +21,7 @@
     <orderEntry type="library" name="Maven: org.eclipse.jetty:jetty-xml:9.3.0.M1" level="project" />
     <orderEntry type="library" name="Maven: org.eclipse.jetty:jetty-servlet:9.3.0.M1" level="project" />
     <orderEntry type="library" name="Maven: org.eclipse.jetty:jetty-security:9.3.0.M1" level="project" />
+    <orderEntry type="library" name="Maven: mysql:mysql-connector-java:5.1.17" level="project" />
     <orderEntry type="library" name="Maven: com.vk.api:sdk:0.4.3" level="project" />
     <orderEntry type="library" name="Maven: org.slf4j:slf4j-api:1.7.22" level="project" />
     <orderEntry type="library" name="Maven: org.apache.commons:commons-collections4:4.1" level="project" />

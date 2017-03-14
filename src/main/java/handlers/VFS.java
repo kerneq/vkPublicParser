@@ -136,7 +136,12 @@ public class VFS {
 
     public void rollBack() {
         try {
-            FileUtils.deleteDirectory(new File(destDir.getCanonicalFile() + File.separator +  counter));
+            FileUtils.deleteDirectory(
+                    new File(destDir.getCanonicalFile() +
+                            File.separator +
+                            counter +
+                            File.separator)
+            );
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -149,5 +154,9 @@ public class VFS {
     public void nextStep() {
         counter++;
         imgName = 1;
+    }
+
+    public static void main(String[] args) throws IOException {
+        FileUtils.deleteDirectory(new File("/home/iters/media/1/"));
     }
 }

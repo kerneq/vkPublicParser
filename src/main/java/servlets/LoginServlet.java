@@ -25,26 +25,11 @@ import java.util.List;
  * Parser, that's parse only text with images or just text
  */
 public class LoginServlet extends HttpServlet {
+    public final int maxPhotoInDir = 2;
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         VkApiClient vk = new VkApiClient(new HttpTransportClient());
-
-        /*
-        try {
-            UserActor actor = Main.getUserActor();
-            PhotoUpload photo =  vk.photos().
-                    getUploadServer(actor).
-                    albumId(241636764).
-                    groupId(140860188).execute();
-            System.out.println(photo.getUploadUrl());
-        } catch (ApiException e) {
-            e.printStackTrace();
-        } catch (ClientException e) {
-            e.printStackTrace();
-        }
-        */
-
         int public_id = IdPublicHandler.getID(req.getParameter("id"));
         int max = Integer.parseInt(req.getParameter("count"));
         int minReposts = ("".equalsIgnoreCase(req.getParameter("repost")))? 0 :
@@ -72,7 +57,7 @@ public class LoginServlet extends HttpServlet {
             if (list.get(i).getLikes().getCount() < minLikes ||
                     list.get(0).getReposts().getCount() < minReposts) {
                 max++;
-                vfs.rollBack();
+                // vfs.rollBack();
                 continue;
             }
 
@@ -80,6 +65,7 @@ public class LoginServlet extends HttpServlet {
             try {
                 String text = list.get(i).getText();
                 isParse = vfs.addEntityTextOnly(text);
+                System.out.println("Date is: " + list.get(i).getDate());
             } catch (NullPointerException e) {
                 // LOGGING
             }
@@ -92,19 +78,25 @@ public class LoginServlet extends HttpServlet {
                 for (int j = 0; j < attach.size(); j++) {
                     // check attach type == photo
                     if (!"photo".equalsIgnoreCase(attach.get(j).getType().getValue())) {
-                        System.out.println("non photo");
                         // throw new RuntimeException();
+                        vfs.rollBack();
                         continue;
                     }
 
                     String imgUrl = ImgUrlParser.getUrlFromSrc(attach.get(j).toString());
                     if (!vfs.addEntity(imgUrl)) {
+                        System.out.println("откат!");
                         vfs.rollBack();
                     } else {
                         addedPhoto++;
+                        isParse = true;
+                    }
+
+                    // too many images i can't store
+                    if (addedPhoto > maxPhotoInDir) {
+                        break;
                     }
                 }
-                isParse = true;
             } catch (Exception e) {
                 // fs.rollBack();
                 // LOGGING
@@ -129,6 +121,12 @@ public class LoginServlet extends HttpServlet {
                 System.out.println("откат");
                 max++;
                 vfs.rollBack();
+            }
+
+            try {
+                Thread.sleep(1000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
             }
         }
 

@@ -44,12 +44,6 @@ public class Main {
         server.start();
         java.util.logging.Logger.getGlobal().info("Server started");
         server.join();
-
-        /*
-        VFS test = new VFS("/home/iters/media");
-        test.addEntity("hello", "https://encrypted-tbn3.gstatic.com/images?q=tbn:ANd9GcTJrzGvFkTylKm_BOaBLIUhpDuqA363gtilvNIZTV2Y85zWcSq6jksF_cQ");
-        test.addEntity("http://minionomaniya.ru/wp-content/uploads/2016/01/%D0%BC%D0%B8%D0%BD%D1%8C%D0%BE%D0%BD%D1%8B-%D0%BF%D1%80%D0%B8%D0%BA%D0%BE%D0%BB%D1%8B-%D0%BA%D0%B0%D1%80%D1%82%D0%B8%D0%BD%D0%BA%D0%B8.jpg");
-        */
     }
 
     public static void setUserActor(UserActor newActor) {
@@ -71,5 +65,6 @@ public class Main {
         port = Integer.parseInt(properties.getProperty("server.port"));
         client_id = Integer.parseInt(properties.getProperty("client.id"));
         secret = properties.getProperty("client.secret");
+        actor = new UserActor(user, token);
     }
 }

@@ -24,11 +24,14 @@ public class ParsedGroupDAO {
         Statement stm = connection.createStatement();
 
         String query = "SELECT * FROM parse_from;";
+        stm.execute(query);
         ResultSet result = stm.getResultSet();
 
-        result.next();
         while(result.next()) {
-            System.out.println("yee");
+            int id = result.getInt("id");
+            int pubId = result.getInt("public_id");
+            int count = result.getInt("count_people");
+            groups.add(new ParsedGroup(id, pubId, count));
         }
 
         result.close();

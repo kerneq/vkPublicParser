@@ -1,9 +1,13 @@
 package db;
 
+import db.dao.ParsedGroupDAO;
+import db.dataSets.ParsedGroup;
+
 import java.sql.Connection;
 import java.sql.Driver;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.util.List;
 
 /**
  * Created by iters on 3/14/17.
@@ -13,11 +17,23 @@ public class DBService {
 
     public DBService() {
         connection = getMysqlConnection();
-        printConnectInfo();
+        // printConnectInfo();
+    }
+
+    public List<ParsedGroup> getParsedGroups() {
+        ParsedGroupDAO dao = new ParsedGroupDAO(connection);
+        try {
+            return dao.getParsedPubList();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return null;
     }
 
     public static void main(String[] args) {
-        new DBService();
+        DBService service = new DBService();
+        System.out.println(service.getParsedGroups());
     }
 
     @SuppressWarnings("UnusedDeclaration")

@@ -13,4 +13,9 @@ public class ParsedGroup {
         this.pubId = pubId;
         this.peopleCount = peopleCount;
     }
+
+    @Override
+    public String toString() {
+        return "id: " + id  + " public_id: " + pubId + " count: " + peopleCount;
+    }
 }

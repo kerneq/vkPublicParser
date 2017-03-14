@@ -23,7 +23,7 @@ public class Main {
     private static int client_id;
     private static String secret;
 
-    private static String token = "0d1f9f2cb46be8b83047d313a58f0c54d6ba7a26bd20469e82a373463f09dd995fc0c20f63185cd28d546";
+    private static String token = "a0af2260f9b20d57b8e83fdd850d34f3eb92c8ea54dd59e1db1130fbf07a3d9e6518bb2c3a0de259c2c41";
     private static int user = 36952698;
     private static UserActor actor = new UserActor(user, token);
 

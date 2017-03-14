@@ -31,8 +31,6 @@ public class InfoServlet extends HttpServlet {
                 Integer.parseInt(req.getParameter("user")),
                 req.getParameter("token"));
         Main.setUserActor(actor);
-        System.out.println("token: " + req.getParameter("token"));
-        System.out.println("user: " + req.getParameter("user"));
 
         // test only
         /*

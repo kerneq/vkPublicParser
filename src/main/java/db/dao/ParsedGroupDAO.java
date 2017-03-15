@@ -42,7 +42,6 @@ public class ParsedGroupDAO {
         Statement stm = connection.createStatement();
         String query = String.format("UPDATE parse_from SET " +
                 "last_parse_time = NOW(), " +
-                "last_usage_time = NOW() " +
                 "WHERE id = %d;", gr.id);
         int updated = stm.executeUpdate(query);
         if (updated < 1) {

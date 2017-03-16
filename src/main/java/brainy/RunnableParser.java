@@ -19,7 +19,7 @@ public class RunnableParser implements Runnable {
 
     @Override
     public void run() {
-        DBService db = new DBService();
+        DBService db = DBService.Instance();
         // daemon
         while (true) {
             List<ParsedGroup> list = db.getParsedGroups();
@@ -65,6 +65,8 @@ public class RunnableParser implements Runnable {
                 System.out.println("Date is: " + list.get(i).getDate());
             } catch (NullPointerException e) {
                 // LOGGING
+                // we don't need images without text
+                continue;
             }
 
             int addedPhoto = 0;

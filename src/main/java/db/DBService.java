@@ -15,11 +15,19 @@ import java.util.List;
 public class DBService {
     private Connection connection;
     private ParsedGroupDAO dao;
+    public static DBService service;
 
-    public DBService() {
+    private DBService() {
         connection = getMysqlConnection();
         dao = new ParsedGroupDAO(connection);
         // printConnectInfo();
+    }
+
+    public static DBService Instance() {
+        if (service == null) {
+            service = new DBService();
+        }
+        return service;
     }
 
     public void updateParsedTime(ParsedGroup gr) {

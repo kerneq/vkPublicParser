@@ -1,6 +1,8 @@
 package handlers;
 
 import com.vk.api.sdk.objects.photos.Photo;
+import db.dataSets.ParsedPost;
+import db.dataSets.PhotoPost;
 import org.apache.commons.io.FileUtils;
 
 import java.io.*;
@@ -8,6 +10,7 @@ import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -21,11 +24,18 @@ public class VFS {
     private int imgName;
     private File destDir;
 
+    // post information
+    private String headText;
+    private List<PhotoPost> photos;
+    private ParsedPost post;
+
     public VFS(String root) {
         this.root = (root.endsWith(File.separator))?root : root + File.separator;
         counter = 1;
         imgName = 1;
         newSession();
+        photos = new ArrayList<>();
+        post = new ParsedPost();
     }
 
     private void newSession() {
@@ -60,6 +70,7 @@ public class VFS {
             e.printStackTrace();
         }
 
+        headText = text;
         return true;
     }
 
@@ -104,6 +115,12 @@ public class VFS {
                     bw.write("ownerId:" + photoOwnerId);
                 }
 
+                photos.add(new PhotoPost(
+                        Integer.parseInt(photoId),
+                        Integer.parseInt(photoAlbumId),
+                        Integer.parseInt(photoOwnerId),
+                        url
+                ));
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -125,6 +142,7 @@ public class VFS {
             pw.write("likes:" + likes + "\n");
             pw.write("reposts:" + reposts + "\n");
             pw.write("comments:" + comments);
+            post.setUp(likes, reposts, comments);
         } catch (FileNotFoundException e) {
             // LOGGING
             // e.printStackTrace();
@@ -142,6 +160,9 @@ public class VFS {
                             counter +
                             File.separator)
             );
+            headText = null;
+            photos.clear();
+            post = new ParsedPost();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -154,6 +175,9 @@ public class VFS {
     public void nextStep() {
         counter++;
         imgName = 1;
+        headText = null;
+        photos.clear();
+        post = new ParsedPost();
     }
 
     public static void main(String[] args) throws IOException {

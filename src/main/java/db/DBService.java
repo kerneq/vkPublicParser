@@ -2,6 +2,7 @@ package db;
 
 import db.dao.ParsedGroupDAO;
 import db.dataSets.ParsedGroup;
+import db.dataSets.ParsedPost;
 
 import java.sql.Connection;
 import java.sql.Driver;
@@ -46,6 +47,10 @@ public class DBService {
         }
 
         return null;
+    }
+
+    public void addNewPost(ParsedPost post) {
+
     }
 
     public static void main(String[] args) {

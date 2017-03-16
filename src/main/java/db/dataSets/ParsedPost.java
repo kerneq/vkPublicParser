@@ -1,5 +1,6 @@
 package db.dataSets;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -7,8 +8,12 @@ import java.util.List;
  */
 public class ParsedPost {
     public int niche, id, likes, comments, reposts, fromPub;
-    List<PhotoPost> ph;
+    public List<PhotoPost> ph;
     // Date
+
+    public ParsedPost() {
+        ph = new ArrayList<>();
+    }
 
     public void setUp(int likes, int reposts, int comments) {
         this.likes = likes;

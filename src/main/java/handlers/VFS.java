@@ -1,6 +1,7 @@
 package handlers;
 
 import com.vk.api.sdk.objects.photos.Photo;
+import db.DBService;
 import db.dataSets.ParsedPost;
 import db.dataSets.PhotoPost;
 import org.apache.commons.io.FileUtils;
@@ -26,7 +27,6 @@ public class VFS {
 
     // post information
     private String headText;
-    private List<PhotoPost> photos;
     private ParsedPost post;
 
     public VFS(String root) {
@@ -34,7 +34,6 @@ public class VFS {
         counter = 1;
         imgName = 1;
         newSession();
-        photos = new ArrayList<>();
         post = new ParsedPost();
     }
 
@@ -100,6 +99,7 @@ public class VFS {
                 String imgPath = locDir.getCanonicalPath() +
                         File.separator + (imgName - 1) + ".jpg";
                 List<Photo> photo = MultipartPostReq.getUploadedImages(new File(imgPath));
+                //TODO: add check img before load
 
                 String photoUrl = ImgUrlParser.getUrlFromSrc(photo.get(0).toString());
                 String photoId = ImgLoaderParser.getIdFromImg(photo.get(0).toString());
@@ -115,7 +115,7 @@ public class VFS {
                     bw.write("ownerId:" + photoOwnerId);
                 }
 
-                photos.add(new PhotoPost(
+                post.ph.add(new PhotoPost(
                         Integer.parseInt(photoId),
                         Integer.parseInt(photoAlbumId),
                         Integer.parseInt(photoOwnerId),
@@ -161,7 +161,6 @@ public class VFS {
                             File.separator)
             );
             headText = null;
-            photos.clear();
             post = new ParsedPost();
         } catch (IOException e) {
             e.printStackTrace();
@@ -176,8 +175,12 @@ public class VFS {
         counter++;
         imgName = 1;
         headText = null;
-        photos.clear();
         post = new ParsedPost();
+    }
+
+    public void loadPostToDB() {
+        DBService service = DBService.Instance();
+
     }
 
     public static void main(String[] args) throws IOException {

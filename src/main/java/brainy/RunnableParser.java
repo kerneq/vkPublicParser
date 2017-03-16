@@ -9,6 +9,7 @@ import db.dataSets.ParsedGroup;
 import handlers.ImgUrlParser;
 import handlers.VFS;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 /**
  * Created by iters on 3/15/17.
@@ -18,16 +19,26 @@ public class RunnableParser implements Runnable {
 
     @Override
     public void run() {
-        List<ParsedGroup> list = new DBService().getParsedGroups();
-        for (ParsedGroup gr : list) {
-            parse(gr.pubId, 10);
+        DBService db = new DBService();
+        // daemon
+        while (true) {
+            List<ParsedGroup> list = db.getParsedGroups();
+            for (ParsedGroup gr : list) {
+                parse(gr.pubId, 10);
+
+                try {
+                    Thread.sleep(1000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                db.updateParsedTime(gr);
+            }
 
             try {
-                Thread.sleep(700);
+                TimeUnit.MINUTES.sleep(25);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-
         }
     }
 

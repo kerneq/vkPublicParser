@@ -30,7 +30,8 @@ public class ParsedGroupDAO {
             int id = result.getInt("id");
             int pubId = result.getInt("public_id");
             int count = result.getInt("count_people");
-            groups.add(new ParsedGroup(id, pubId, count));
+            int niche = result.getInt("niche");
+            groups.add(new ParsedGroup(id, pubId, count, niche));
         }
 
         result.close();
@@ -41,7 +42,7 @@ public class ParsedGroupDAO {
     public void setUpdatedParsedGroup(ParsedGroup gr) throws SQLException {
         Statement stm = connection.createStatement();
         String query = String.format("UPDATE parse_from SET " +
-                "last_parse_time = NOW(), " +
+                "last_parse_time = NOW()" +
                 "WHERE id = %d;", gr.id);
         int updated = stm.executeUpdate(query);
         if (updated < 1) {

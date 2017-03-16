@@ -14,14 +14,23 @@ import java.util.List;
  */
 public class DBService {
     private Connection connection;
+    private ParsedGroupDAO dao;
 
     public DBService() {
         connection = getMysqlConnection();
+        dao = new ParsedGroupDAO(connection);
         // printConnectInfo();
     }
 
+    public void updateParsedTime(ParsedGroup gr) {
+        try {
+            dao.setUpdatedParsedGroup(gr);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
     public List<ParsedGroup> getParsedGroups() {
-        ParsedGroupDAO dao = new ParsedGroupDAO(connection);
         try {
             return dao.getParsedPubList();
         } catch (SQLException e) {

@@ -1,6 +1,7 @@
 package db;
 
 import db.dao.ParsedGroupDAO;
+import db.dao.PostDAO;
 import db.dataSets.ParsedGroup;
 import db.dataSets.ParsedPost;
 
@@ -16,11 +17,13 @@ import java.util.List;
 public class DBService {
     private Connection connection;
     private ParsedGroupDAO dao;
+    private PostDAO postDao;
     public static DBService service;
 
     private DBService() {
         connection = getMysqlConnection();
         dao = new ParsedGroupDAO(connection);
+        postDao = new PostDAO(connection);
         // printConnectInfo();
     }
 
@@ -49,8 +52,8 @@ public class DBService {
         return null;
     }
 
-    public void addNewPost(ParsedPost post) {
-
+    public void addNewPost(ParsedPost post, ParsedGroup gr) {
+        postDao.addPost(post, gr.niche);
     }
 
     public static void main(String[] args) {

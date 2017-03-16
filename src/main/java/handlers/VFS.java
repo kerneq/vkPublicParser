@@ -178,9 +178,8 @@ public class VFS {
         post = new ParsedPost();
     }
 
-    public void loadPostToDB() {
-        DBService service = DBService.Instance();
-
+    public ParsedPost getPost() {
+        return post;
     }
 
     public static void main(String[] args) throws IOException {

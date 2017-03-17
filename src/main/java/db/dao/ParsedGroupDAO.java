@@ -55,7 +55,7 @@ public class ParsedGroupDAO {
     public void setUpdateUnixTime(ParsedGroup gr, int unix) throws SQLException {
         Statement stm = connection.createStatement();
         String query = String.format("UPDATE parse_from SET " +
-                "last_post_unix = %d" +
+                "last_post_unix = %d " +
                 "WHERE id = %d;", unix, gr.id);
         int updated = stm.executeUpdate(query);
         if (updated < 1) {

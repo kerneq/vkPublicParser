@@ -115,8 +115,8 @@ public class RunnableParser implements Runnable {
 
             // check if was a content here
             if (isParse) {
-                vfs.nextStep();
                 DBService.Instance().addNewPost(vfs.getPost(), gr);
+                vfs.nextStep();
             } else if (!isParse || addedPhoto == 0) {
                 System.out.println("откат");
                 max++;

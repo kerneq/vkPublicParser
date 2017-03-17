@@ -4,7 +4,7 @@ package db.dataSets;
  * Created by iters on 3/16/17.
  */
 public class PhotoPost {
-    public int mediaId, albumId, ownerId, id;
+    public int mediaId, albumId, ownerId;
     public String url;
 
     public PhotoPost(int mediaId, int albumId, int ownerId, String url) {

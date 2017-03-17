@@ -16,6 +16,11 @@ public class PostDAO {
 
     public void addPost(ParsedPost post, int niche, int pubId) throws SQLException {
         Statement stm = connection.createStatement();
+        //TODO: check in vfs
+        if (post.text == null) {
+            post.text = "";
+        }
+        System.out.println(post);
         String query = String.format("INSERT INTO post_info" +
                 "(id," +
                 "text," +
@@ -27,17 +32,19 @@ public class PostDAO {
                 "parse_date)" +
                 "VALUES" +
                 "(NULL," +
-                "%s" +
-                "%d" +
-                "%d" +
-                "%d" +
-                "%d" +
-                "%d" +
+                "'%s'," +
+                "%d," +
+                "%d," +
+                "%d," +
+                "%d," +
+                "%d," +
                 "NOW());", post.text, niche, post.likes, post.reposts, post.comments, pubId);
         stm.executeUpdate(query, Statement.RETURN_GENERATED_KEYS);
-        ResultSet res = stm.getResultSet();
 
-        int newPostId = res.getInt("id");
+        ResultSet res = stm.getGeneratedKeys();
+        res.next();
+        int newPostId = res.getInt(1);
+        System.out.println("NEW ID : " + newPostId);
         for (PhotoPost ph : post.ph) {
             query = String.format("INSERT INTO photo" +
                     "(id," +
@@ -45,13 +52,13 @@ public class PostDAO {
                     "album_id," +
                     "owner_id," +
                     "url," +
-                    "post_id)" +
+                    "post_id) " +
                     "VALUES" +
-                    "(null," +
+                    "(NULL," +
                     "%d," +
                     "%d," +
                     "%d," +
-                    "%s," +
+                    "'%s'," +
                     "%d);", ph.mediaId, ph.albumId, ph.ownerId, ph.url, newPostId);
             stm.executeUpdate(query);
         }

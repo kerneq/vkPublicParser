@@ -54,7 +54,7 @@ public class DBService {
 
     public void addNewPost(ParsedPost post, ParsedGroup gr) {
         try {
-            postDao.addPost(post, gr.niche, gr.pubId);
+            postDao.addPost(post, gr.niche, gr.id);
         } catch (SQLException e) {
             e.printStackTrace();
         }

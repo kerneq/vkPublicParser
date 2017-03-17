@@ -9,6 +9,7 @@ import java.util.List;
 public class ParsedPost {
     public int niche, id, likes, comments, reposts, fromPub;
     public List<PhotoPost> ph;
+    public String text;
     // Date
 
     public ParsedPost() {

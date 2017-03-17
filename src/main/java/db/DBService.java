@@ -53,7 +53,11 @@ public class DBService {
     }
 
     public void addNewPost(ParsedPost post, ParsedGroup gr) {
-        postDao.addPost(post, gr.niche);
+        try {
+            postDao.addPost(post, gr.niche, gr.pubId);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
     public static void main(String[] args) {

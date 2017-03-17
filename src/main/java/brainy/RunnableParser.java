@@ -24,7 +24,7 @@ public class RunnableParser implements Runnable {
         while (true) {
             List<ParsedGroup> list = db.getParsedGroups();
             for (ParsedGroup gr : list) {
-                parse(gr.pubId, 10);
+                parse(gr.pubId, 10, gr);
 
                 try {
                     Thread.sleep(1000);
@@ -42,7 +42,7 @@ public class RunnableParser implements Runnable {
         }
     }
 
-    private void parse(int public_id, int max) {
+    private void parse(int public_id, int max, ParsedGroup gr) {
         VkApiClient vk = new VkApiClient(new HttpTransportClient());
         String root = "/home/iters/media/";
         VFS vfs = new VFS(root);
@@ -116,6 +116,7 @@ public class RunnableParser implements Runnable {
             // check if was a content here
             if (isParse) {
                 vfs.nextStep();
+                DBService.Instance().addNewPost(vfs.getPost(), gr);
             } else if (!isParse || addedPhoto == 0) {
                 System.out.println("откат");
                 max++;

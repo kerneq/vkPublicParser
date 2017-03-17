@@ -5,7 +5,7 @@ package db.dataSets;
  */
 public class PhotoPost {
     public int mediaId, albumId, ownerId, id;
-    String url;
+    public String url;
 
     public PhotoPost(int mediaId, int albumId, int ownerId, String url) {
         this.mediaId = mediaId;

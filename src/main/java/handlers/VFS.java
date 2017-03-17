@@ -26,7 +26,6 @@ public class VFS {
     private File destDir;
 
     // post information
-    private String headText;
     private ParsedPost post;
 
     public VFS(String root) {
@@ -69,7 +68,7 @@ public class VFS {
             e.printStackTrace();
         }
 
-        headText = text;
+        post.text = text;
         return true;
     }
 
@@ -160,7 +159,6 @@ public class VFS {
                             counter +
                             File.separator)
             );
-            headText = null;
             post = new ParsedPost();
         } catch (IOException e) {
             e.printStackTrace();
@@ -174,7 +172,6 @@ public class VFS {
     public void nextStep() {
         counter++;
         imgName = 1;
-        headText = null;
         post = new ParsedPost();
     }
 

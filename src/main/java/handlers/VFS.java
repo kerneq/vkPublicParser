@@ -98,7 +98,6 @@ public class VFS {
                 String imgPath = locDir.getCanonicalPath() +
                         File.separator + (imgName - 1) + ".jpg";
                 List<Photo> photo = MultipartPostReq.getUploadedImages(new File(imgPath));
-                //TODO: add check img before load
 
                 String photoUrl = ImgUrlParser.getUrlFromSrc(photo.get(0).toString());
                 String photoId = ImgLoaderParser.getIdFromImg(photo.get(0).toString());

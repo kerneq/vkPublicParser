@@ -16,10 +16,12 @@ public class PostDAO {
 
     public void addPost(ParsedPost post, int niche, int pubId) throws SQLException {
         Statement stm = connection.createStatement();
-        //TODO: check in vfs
+        /*
         if (post.text == null) {
             post.text = "";
         }
+        */
+
         System.out.println(post);
         String query = String.format("INSERT INTO post_info" +
                 "(id," +

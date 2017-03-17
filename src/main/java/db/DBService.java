@@ -42,6 +42,14 @@ public class DBService {
         }
     }
 
+    public void updateUnixTimeGroup(ParsedGroup gr, int time) {
+        try {
+            dao.setUpdateUnixTime(gr, time);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
     public List<ParsedGroup> getParsedGroups() {
         try {
             return dao.getParsedPubList();

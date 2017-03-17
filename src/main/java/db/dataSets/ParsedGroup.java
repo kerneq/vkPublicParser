@@ -8,12 +8,14 @@ public class ParsedGroup {
     public int pubId;
     public int peopleCount;
     public int niche;
+    public int last_post_unix;
 
-    public ParsedGroup(int id, int pubId, int peopleCount, int niche) {
+    public ParsedGroup(int id, int pubId, int peopleCount, int niche, int last_post_unix) {
         this.id = id;
         this.pubId = pubId;
         this.peopleCount = peopleCount;
         this.niche = niche;
+        this.last_post_unix = last_post_unix;
     }
 
     @Override

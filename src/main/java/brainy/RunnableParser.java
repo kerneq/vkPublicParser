@@ -58,6 +58,17 @@ public class RunnableParser implements Runnable {
         for (int i = 0; i < list.size() && i < max; i++) {
             boolean isParse = false;
 
+            // update unix time
+            if (i == 0) {
+                int unixTime = list.get(0).getDate();
+                DBService.Instance().updateUnixTimeGroup(gr, unixTime);
+            }
+
+            // check date from db
+            if (list.get(i).getDate() <= gr.last_post_unix) {
+                break;
+            }
+
             // trying to get title text
             try {
                 String text = list.get(i).getText();

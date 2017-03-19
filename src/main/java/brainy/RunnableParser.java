@@ -66,13 +66,15 @@ public class RunnableParser implements Runnable {
             }
 
             // check date from db
+            System.out.println(list.get(i).getDate() + " : " + gr.last_post_unix);
             if (list.get(i).getDate() <= gr.last_post_unix) {
                 break;
             }
 
             // update unix time
             if (!isTimeUnixUpdated) {
-                int unixTime = list.get(0).getDate();
+                int unixTime = list.get(i).getDate();
+                // обновляет ли ?
                 DBService.Instance().updateUnixTimeGroup(gr, unixTime);
                 isTimeUnixUpdated = true;
             }
@@ -80,7 +82,8 @@ public class RunnableParser implements Runnable {
             // trying to get title text
             try {
                 String text = list.get(i).getText();
-                isParse = vfs.addEntityTextOnly(text);
+                // isParse = vfs.addEntityTextOnly(text);
+                vfs.addEntityTextOnly(text);
             } catch (NullPointerException e) {
                 // LOGGING
                 // we don't need images without text

@@ -29,7 +29,6 @@ public class PostDAO {
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         }
-        System.out.println("txt: " + txt);
 
         String query = String.format("INSERT INTO post_info" +
                 "(id," +

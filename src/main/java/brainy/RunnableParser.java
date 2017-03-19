@@ -10,12 +10,14 @@ import handlers.ImgUrlParser;
 import handlers.VFS;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * Created by iters on 3/15/17.
  */
 public class RunnableParser implements Runnable {
-    private int maxPhotoInDir = 2; // in fact 3
+    private int maxPhotoInDir = 3; // in fact 4
 
     @Override
     public void run() {
@@ -46,6 +48,8 @@ public class RunnableParser implements Runnable {
         VkApiClient vk = new VkApiClient(new HttpTransportClient());
         String root = "/home/iters/media/";
         VFS vfs = new VFS(root);
+        Pattern pattern = Pattern.compile(".*\\[club\\d+\\|.*]");
+        Matcher matcher = pattern.matcher("");
 
         List<WallpostFull> list = null;
         try {
@@ -66,7 +70,6 @@ public class RunnableParser implements Runnable {
             }
 
             // check date from db
-            System.out.println(list.get(i).getDate() + " : " + gr.last_post_unix);
             if (list.get(i).getDate() <= gr.last_post_unix) {
                 break;
             }
@@ -74,7 +77,6 @@ public class RunnableParser implements Runnable {
             // update unix time
             if (!isTimeUnixUpdated) {
                 int unixTime = list.get(i).getDate();
-                // обновляет ли ?
                 DBService.Instance().updateUnixTimeGroup(gr, unixTime);
                 isTimeUnixUpdated = true;
             }
@@ -82,6 +84,12 @@ public class RunnableParser implements Runnable {
             // trying to get title text
             try {
                 String text = list.get(i).getText();
+                matcher.reset(text);
+                if (matcher.find()) {
+                    continue;
+                }
+
+                // posts can be without text. isParse only check images
                 // isParse = vfs.addEntityTextOnly(text);
                 vfs.addEntityTextOnly(text);
             } catch (NullPointerException e) {
@@ -95,6 +103,7 @@ public class RunnableParser implements Runnable {
             try {
                 List<WallpostAttachment> attach = list.get(i).getAttachments();
                 addedPhoto = 0;
+                // TODO: check attachments size
                 for (int j = 0; j < attach.size(); j++) {
                     // check attach type == photo
                     if (!"photo".equalsIgnoreCase(attach.get(j).getType().getValue())) {

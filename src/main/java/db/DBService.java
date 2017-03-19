@@ -44,6 +44,7 @@ public class DBService {
 
     public void updateUnixTimeGroup(ParsedGroup gr, int time) {
         try {
+            //TODO: закрепленные записи не считать
             dao.setUpdateUnixTime(gr, time);
         } catch (SQLException e) {
             e.printStackTrace();

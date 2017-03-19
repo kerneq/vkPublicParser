@@ -4,7 +4,7 @@ package handlers;
  * Created by iters on 3/10/17.
  */
 public class ImgLoaderParser {
-    //TODO: link to one method
+    //TODO: combine to one method
 
     /**
      * for img that's was load to my group

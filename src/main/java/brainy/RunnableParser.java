@@ -55,18 +55,26 @@ public class RunnableParser implements Runnable {
             e.printStackTrace();
         }
 
+        boolean isTimeUnixUpdated = false;
         for (int i = 0; i < list.size() && i < max; i++) {
             boolean isParse = false;
 
-            // update unix time
-            if (i == 0) {
-                int unixTime = list.get(0).getDate();
-                DBService.Instance().updateUnixTimeGroup(gr, unixTime);
+            // don't parse pinned posts
+            if (list.get(i).getIsPinned() != null) {
+                System.out.println("PINNED POST");
+                continue;
             }
 
             // check date from db
             if (list.get(i).getDate() <= gr.last_post_unix) {
                 break;
+            }
+
+            // update unix time
+            if (!isTimeUnixUpdated) {
+                int unixTime = list.get(0).getDate();
+                DBService.Instance().updateUnixTimeGroup(gr, unixTime);
+                isTimeUnixUpdated = true;
             }
 
             // trying to get title text
@@ -128,7 +136,7 @@ public class RunnableParser implements Runnable {
             if (isParse) {
                 DBService.Instance().addNewPost(vfs.getPost(), gr);
                 vfs.nextStep();
-            } else if (!isParse || addedPhoto == 0) {
+            } else if (addedPhoto == 0) {
                 System.out.println("откат");
                 max++;
                 vfs.rollBack();

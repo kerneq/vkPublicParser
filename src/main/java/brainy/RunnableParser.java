@@ -103,7 +103,12 @@ public class RunnableParser implements Runnable {
             try {
                 List<WallpostAttachment> attach = list.get(i).getAttachments();
                 addedPhoto = 0;
-                // TODO: check attachments size
+
+                // max 4 photos in post
+                if (attach.size() > 4) {
+                    continue;
+                }
+
                 for (int j = 0; j < attach.size(); j++) {
                     // check attach type == photo
                     if (!"photo".equalsIgnoreCase(attach.get(j).getType().getValue())) {

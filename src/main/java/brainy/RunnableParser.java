@@ -15,7 +15,7 @@ import java.util.concurrent.TimeUnit;
  * Created by iters on 3/15/17.
  */
 public class RunnableParser implements Runnable {
-    private int maxPhotoInDir = 2;
+    private int maxPhotoInDir = 2; // in fact 3
 
     @Override
     public void run() {
@@ -81,7 +81,6 @@ public class RunnableParser implements Runnable {
             try {
                 String text = list.get(i).getText();
                 isParse = vfs.addEntityTextOnly(text);
-                System.out.println("Date is: " + list.get(i).getDate());
             } catch (NullPointerException e) {
                 // LOGGING
                 // we don't need images without text
@@ -103,7 +102,7 @@ public class RunnableParser implements Runnable {
 
                     String imgUrl = ImgUrlParser.getUrlFromSrc(attach.get(j).toString());
                     if (!vfs.addEntity(imgUrl)) {
-                        System.out.println("откат!");
+                        // System.out.println("откат!");
                         vfs.rollBack();
                     } else {
                         addedPhoto++;

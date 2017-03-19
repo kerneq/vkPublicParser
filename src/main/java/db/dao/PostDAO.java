@@ -2,6 +2,9 @@ package db.dao;
 
 import db.dataSets.ParsedPost;
 import db.dataSets.PhotoPost;
+
+import java.io.UnsupportedEncodingException;
+import java.nio.charset.Charset;
 import java.sql.*;
 
 /**
@@ -16,13 +19,18 @@ public class PostDAO {
 
     public void addPost(ParsedPost post, int niche, int pubId) throws SQLException {
         Statement stm = connection.createStatement();
-        /*
         if (post.text == null) {
             post.text = "";
         }
-        */
 
-        System.out.println(post);
+        String txt = null;
+        try {
+            txt = new String(post.text.getBytes("UTF-8"));
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+        System.out.println("txt: " + txt);
+
         String query = String.format("INSERT INTO post_info" +
                 "(id," +
                 "text," +
@@ -40,7 +48,7 @@ public class PostDAO {
                 "%d," +
                 "%d," +
                 "%d," +
-                "NOW());", post.text, niche, post.likes, post.reposts, post.comments, pubId);
+                "NOW());", txt, niche, post.likes, post.reposts, post.comments, pubId);
         stm.executeUpdate(query, Statement.RETURN_GENERATED_KEYS);
 
         ResultSet res = stm.getGeneratedKeys();

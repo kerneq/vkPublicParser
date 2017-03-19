@@ -44,7 +44,6 @@ public class DBService {
 
     public void updateUnixTimeGroup(ParsedGroup gr, int time) {
         try {
-            //TODO: закрепленные записи не считать
             dao.setUpdateUnixTime(gr, time);
         } catch (SQLException e) {
             e.printStackTrace();
@@ -85,9 +84,10 @@ public class DBService {
                     append("jdbc:mysql://").        //db type
                     append("localhost:").           //host name
                     append("3306/").                //port
-                    append("doPost?").          //db name
-                    append("user=root&").          //login
-                    append("password=00755cnfc");       //password
+                    append("doPost?").              //db name
+                    append("user=root&").           //login
+                    append("password=00755cnfc").   //password
+                    append("&useUnicode=yes&characterEncoding=UTF-8");
 
             Connection connection = DriverManager.getConnection(url.toString());
             return connection;
